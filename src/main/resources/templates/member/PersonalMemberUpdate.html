@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>PersonalMember</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="/css/sb-admin-2.min.css" rel="stylesheet">
+
+</head>
+
+<body class="bg-gradient-primary">
+
+    <div class="container">
+
+        <div class="card o-hidden border-0 shadow-lg my-5">
+            <div class="card-body p-0">
+                <!-- Nested Row within Card Body -->
+                <div class="row">
+                    <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
+                    <div class="col-lg-7">
+                        <div class="p-5">
+                            <div class="text-center">
+                                <h1 class="h4 text-gray-900 mb-4">개인 회원 수정(삭제)</h1>
+                            </div>
+                             <form class="user" name="personalMemberForm" th:action="@{/member/PersonalMember_update}" th:object="${form}" method="POST">
+                                <div class="sidebar-heading">
+				                	Applicant Info
+				            	</div>
+                                <div class="form-group row">
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <input type="text" class="form-control form-control-user" name="Id" id="Id"
+                                            placeholder="Login Id" th:field="${personalMember.id}" readonly>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control form-control-user" name="Name" id="Name"
+                                            placeholder="User Name" th:field="${personalMember.name}">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <input type="email" class="form-control form-control-user" name="Email" id="Email"
+                                        placeholder="Email Address" th:field="${personalMember.email}">
+                                </div>                               
+                                <div class="form-group row">
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <input type="password" class="form-control form-control-user" name="LoginPassword" id="LoginPassword" 
+                                        placeholder="비밀번호">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input type="password" class="form-control form-control-user" name="RepeatPassword" id="RepeatPassword" 
+                                        placeholder="비밀번호 확인">
+                                    </div>
+                                </div>
+                                <div class="alert alert-success" id="alert-success">비밀번호가 일치합니다.</div>
+                                <div class="alert alert-fail" id="alert-fail">비밀번호가 일치하지 않습니다.</div>
+                                <div class="form-group row">
+                                	<div class="col-sm-6 mb-3 mb-sm-0">
+                                        <input type="tel" class="form-control form-control-user" name="Mobile" id="Mobile"
+                                        placeholder="Cellular Phone Number" th:field="${personalMember.mobile}">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control form-control-user" name="ZipCode" id="ZipCode" 
+                                        placeholder="Zip Code" th:field= "${personalMember.zipCode}">
+                                    </div>                                    
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control form-control-user" name="baseAddress" id="baseAddress"
+                                        placeholder="Base Address" th:field="${personalMember.baseAddress}">
+                                </div> 
+                                <div class="form-group">
+                                    <input type="email" class="form-control form-control-user" name="detailAddress" id="detailAddress"
+                                        placeholder="Detail Address" th:field="${personalMember.detailAddress}">
+                                </div>
+                                <div class="form-group row" >                                	
+									<div class="container" 
+										style="width:180px;height:100px;" >										
+										<select class="form-control" name="FavoriteType" id="FavoriteType">
+										  <option value="" disabled selected  hidden>Favorite</option>
+										  <option value = "FOOTBALL">FootBall</option>
+										  <option value = "BASEBALL">BaseBall</option>
+										  <option value = "BASKETBALL">BasketBall</option>										  
+										</select>
+									</div>
+									<div class="container" 
+										style="width:150px;height:100px;" >										
+										<select class="form-control" name="StatusType" id="StatusType">
+										  <option value="" disabled selected  hidden>Status</option>
+										  <option value = "JOIN">Join</option>
+										  <option value = "DELETION">Deletion</option>										  										  
+										</select>
+									</div>
+									<div class="container"
+										style="width:200px;height:100px;">
+										<select class="form-control" name="LevelType" id="LevelType">
+										  <option value="" disabled selected  hidden>Level</option>
+										  <option value = "YOUTH">Youth</option>
+										  <option value = "AMATURE">Amature</option>
+										  <option value = "PROFESSIONAL">Professional</option>
+										  <option value = "NATIONAL">National</option>							  										  
+										</select>
+									</div>
+									<!-- <div class="dropdown Favorite">
+                                        <button class="btn  btn-primary  dropdown-toggle" type="button"
+                                            id="dropdownMenuFavorite" data-toggle="dropdown" aria-haspopup="true"
+                                            aria-expanded="false">
+                                            Personal Favorite
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuFavorite">
+                                            <a class="dropdown-item" href="#">FOOTBALL</a>
+                                            <a class="dropdown-item" href="#">BASEBALL</a>
+                                            <a class="dropdown-item" href="#">BASKETBALL</a>
+                                        </div>
+									</div>									
+									<div class="dropdown Status">
+                                    	<button class="btn btn-secondary dropdown-toggle" type="button"
+                                            id="dropdownMenuStatus" data-toggle="dropdown" aria-haspopup="true"
+                                            aria-expanded="false" style="width:150px;">
+                                            Personal Status
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuStatus">
+                                            <a class="dropdown-item" href="#">JOIN</a>												                                            
+                                            <a class="dropdown-item" href="#">DELETION</a>                                          
+                                        </div>
+									</div>					
+									<div>&nbsp;</div>				
+									<div class="dropdown Level">                                      
+                                        <button class="btn btn-secondary dropdown-toggle" type="button"
+                                            id="dropdownMenuLevel" data-toggle="dropdown" aria-haspopup="true"
+                                            aria-expanded="false" style="width:180px;">
+                                            Personal Level
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLevel">
+                                            <a class="dropdown-item" href="#">YOUTH</a>
+                                            <a class="dropdown-item" href="#">AMATURE</a>
+                                            <a class="dropdown-item" href="#">PROFESSIONAL</a>
+                                            <a class="dropdown-item" href="#">NATIONAL</a>
+                                        </div>	                                                                                                      
+	                                </div> --> 
+	                            </div>
+	                            <div class="form-group row">
+                                	<div class="col-sm-6 mb-3 mb-sm-0">
+                                        <input type="tel" class="form-control form-control-user" name="Point" id="Point"
+                                        placeholder="My Pointr" th:field="${personalMember.point}">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control form-control-user" name="Mileage" id="Mileage" 
+                                        placeholder="My Mileage" th:field="${personalMember.mileage}">
+                                    </div>                                    
+                                </div>
+                                <a href="#" class="btn btn-primary btn-user btn-block" id="submit">
+                                    Save
+                                </a>                                
+                            </form>
+                            <hr>
+                            <div class="text-center">
+                                <a class="small" href="forgot-password.html">Forgot Password?</a>
+                            </div>
+                            <div class="text-center">
+                                <a class="small" href="login.html">Already have an account? Login!</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="/js/sb-admin-2.min.js"></script>
+    
+    <script>
+		$(".btn.btn-primary.btn-user.btn-block").click(function(e) {			
+			$("form[name=personalMemberForm]").submit();
+			
+		});
+		
+		$(function(){
+			$("#alert-success").hide();
+			$("#alert-fail").hide();
+			$("input").keyup(function(){
+				var pwd1 = $("#LoginPassword").val();
+				var pwd2 = $("#RepeatPassword").val();
+				if(pwd1 != "" && pwd2 != "") {
+					if(pwd1 == pwd2){
+						$("#alert-success").show();
+						$("#alert-fail").hide();
+						$("#submit").removeAttr("disabled");
+					}else {
+						$("#alert-success").hide();
+						$("#alert-fail").show();
+						$("#submit").attr("disabled", "disabled");
+					}
+				}
+			});
+		});
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,54 @@
+server:
+  port: 8080
+
+#FeignClient 설정
+feign:
+  hystrix:
+    enabled: true
+
+hystrix:
+  command:
+    default:
+      execution.isolation.thread.timeoutInMilliseconds: 610
+---
+
+spring:
+#  profiles: default
+  application:
+    name: myplay-bff
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+api:
+  bff:
+    url: http://localhost:8080
+  member:
+    url: http://localhost:8081
+  playground:
+    url: http://localhost:8082
+  reservation:
+    url: http://localhost:8083
+  review:
+    url: http://localhost:8084
+  payment:
+    url: http://localhost:8085
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: dev
+api:
+  bff:
+    url: http://myplay-bff-app-dev:8080
+  member:
+    url: http://myplay-member-app-dev:8080
+  playground:
+    url: http://myplay-playground-app-dev:8080
+  reservation:
+    url: http://myplay-reservation-app-dev:8080
+  payment:
+    url: http://myplay-payment-app-dev:8080
+  review:
+    url: http://myplay-review-app-dev:8080

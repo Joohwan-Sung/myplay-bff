@@ -1,0 +1,175 @@
+<html lang="en">
+
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+	<meta name="description" content="" />
+	<meta name="author" content="" />
+	<title>My Playground</title>
+	<!-- Favicon-->
+	<link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+	<!-- Bootstrap icons-->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+	<!-- Core theme CSS (includes Bootstrap)-->
+	<link href="/css/styles.css" rel="stylesheet" />
+</head>
+
+<body>
+	<!-- Navigation-->
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<div class="container px-4 px-lg-5">
+			<a class="navbar-brand" href="#!">My Playground</a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+				data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+				aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+					<li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">Home</a></li>
+					<li class="nav-item"><a class="nav-link" href="#!">About</a></li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
+							data-bs-toggle="dropdown" aria-expanded="false">Playground</a>
+						<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+							<li><a class="dropdown-item" href="#!">Playground Lists</a></li>
+							<li>
+								<hr class="dropdown-divider" />
+							</li>
+							<li><a class="dropdown-item" href="#!">View</a></li>
+							<li><a class="dropdown-item" href="#!">Reservation</a></li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<!-- Section-->
+	<section class="py-5">
+		<div class="container px-4 px-lg-5 mt-5">
+			<div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+				<div class="col mb-5">
+					<div class="card h-100">
+						<!-- Sale badge-->
+						<div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem"
+							th:text="${reservation.statusType}"></div>
+						<!-- Product image-->
+						<img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
+						<!-- Product details-->
+						<div class="card-body p-4">
+							<div class="text-center">
+								<!-- Product name-->
+								<h5 class="fw-bolder" th:text="${reservation.playground.corporateMember.name}"></h5>
+								<!-- Product price-->
+								$25.00
+							</div>
+						</div>
+						<!-- Paticipans-->
+						<div class="card-body p-4">
+							<div class="text-center">
+								<ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+									<li class="nav-item dropdown" th:each="participant : ${reservation.participants}">
+										<a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
+											data-bs-toggle="dropdown" aria-expanded="false"
+											th:text="${participant.name}"></a>
+										<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+											<li><a class="dropdown-item" href="#!" th:text="${participant.name}"></a>
+											</li>
+											<li><a class="dropdown-item" href="#!" th:text="${participant.mobile}"></a>
+											</li>
+										</ul>
+									</li>
+								</ul>
+							</div>
+						</div>
+						<!-- Product actions-->
+						<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+							<!-- Pay 버튼에 /payment 컨트롤러 호출하도록 연결 -->
+							<div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#"
+									th:onclick="'javascript:goPay(\'' + ${reservation.id} + '\');'">Pay</a></div>
+							<div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#" th:onclick="'javascript:goUpdateReservation(\'' + ${reservation.id} + '\', \'' + CANCELED + '\');'">Cancel</a></div>
+							<div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#" th:onclick="'javascript:goUpdateReservation(\'' + ${reservation.id} + '\', \'' + FINISHED + '\');'">Finish</a></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	
+	<!-- 시설 이용 상태변경 페이지 전송 폼 -->
+	<form name="putSubmitForm" id="putSubmitForm">
+		<input type="hidden" id="reservationId" name="reservationId"/>
+        <input type="hidden" id="statusType" name="statusType"/>
+    </form>
+    
+	<!-- Footer-->
+	<footer class="py-5 bg-dark">
+		<div class="container">
+			<p class="m-0 text-center text-white">Copyright &copy; Your Website 2021</p>
+		</div>
+	</footer>
+	
+	<!-- Bootstrap core JavaScript-->
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="/js/sb-admin-2.min.js"></script>
+    
+	<!-- Core theme JS-->
+	<script src="/js/scripts.js"></script>
+	
+	<script>
+		$.fn.serializeObject = function() {
+		  "use strict"
+		  var result = {}
+		  var extend = function(i, element) {
+		    var node = result[element.name]
+		    if ("undefined" !== typeof node && node !== null) {
+		      if ($.isArray(node)) {
+		        node.push(element.value)
+		      } else {
+		        result[element.name] = [node, element.value]
+		      }
+		    } else {
+		      result[element.name] = element.value
+		    }
+		  }
+
+		  $.each(this.serializeArray(), extend)
+		  return result
+		}
+		
+	    function goPay(value) {
+	        location.href = "/payments/pay/" + value;
+	    }
+	    
+	    function goUpdateReservation(id, status) {
+		    $("input[type=hidden][name=reservationId]").val(id);
+		    $("input[type=hidden][name=statusType]").val(status);
+	    	
+	        var param = $("form[name=putSubmitForm]").serializeObject();
+		    var url = "/reservations/" + id;
+			
+			console.log(JSON.stringify(param));
+			$.ajax({
+				method: "PUT",
+				contentType: "application/json",
+				url: url ,
+				data : JSON.stringify(param) ,
+				success: function (param) {
+					console.log("SUCCESS");
+					
+					if (param) {
+					    window.location.replace(param);
+					}
+				} , error: function( e) {
+					console.log("ERROR",e);
+				}
+			})
+	    }
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>My Playground - Playground Detail</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="/css/sb-admin-2.min.css" rel="stylesheet">
+
+</head>
+
+<body class="bg-gradient-primary">
+
+    <div class="container">
+
+        <div class="card o-hidden border-0 shadow-lg my-5">
+            <div class="card-body p-0">
+                <!-- Nested Row within Card Body -->
+                <div class="row">
+                    <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
+                    <div class="col-lg-7">
+                        <div class="p-5">
+                            <div class="text-center">
+                                <h1 class="h4 text-gray-900 mb-4">Playground Register(시설물 상세조회)</h1>
+                            </div>
+                            
+                                <div class="form-group">
+                                    <input type="text" class="form-control form-control-user" id="name" name="name"
+                                        th:value="${playground.name}" readonly>
+                                </div>
+                                <div class="sidebar-heading">
+				                	Address Info
+				            	</div>
+                                <div class="form-group row">
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <input type="text" class="form-control form-control-user" name="baseAddress"
+                                            id="baseAddress" placeholder="기본주소" th:value="${playground.Address.baseAddress}" readonly>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control form-control-user" name="detailAddress"
+                                            id="detailAddress" placeholder="상세주소" th:value="${playground.Address.detailAddress}" readonly>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control form-control-user" name="zipCode"
+                                            id="zipCode" placeholder="우편번호" th:value="${playground.Address.zipCode}" readonly>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                	<div class="col-sm-6 mb-3 mb-sm-0">
+	                                    <input type="text" class="form-control form-control-user" id="gpsCoordinates" name="gpsCoordinates"
+	                                        placeholder="GPS 정보" th:value="${playground.gpsCoordinates}" readonly>
+	                                    <input type="text" class="form-control form-control-user" id="capacity" name="capacity"
+	                                        placeholder="수용인원" th:value="${playground.capacity}" readonly>
+	                                    <input type="text" class="form-control form-control-user" id="priceHour" name="priceHour"
+	                                        placeholder="시간당금액" th:value="${playground.priceHour}" readonly>
+	                                </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <input type="text" class="form-control form-control-user" name="startTime"
+                                            id="startTime" placeholder="시작시간" th:value="${playground.startTime}" readonly>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control form-control-user" name="finishTime"
+                                            id="finishTime" placeholder="종료시간" th:value="${playground.finishTime}" readonly>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control form-control-user" id="playgroundType" name="playgroundType"
+                                        placeholder="시설물 타입 - 셀렉트 박스로 변경필요" th:value="${playground.playgroundType}" readonly>
+                                </div>
+                            
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 시설물에 등록된 후기 조회 ----------------------------------------------- -->
+				<div th:each="review: ${reviewList}">
+                	<div class="form-group row">
+                        <div class="col-sm-6 mb-3 mb-sm-0">
+                        	Writer : <input type="text" class="form-control form-control-user" th:value=${review.writer.personalMemberName} readonly> </input>
+                        </div>
+                        <div class="col-sm-6">
+                        	Date : <input type="text" class="form-control form-control-user" th:value=${review.createDate} readonly> </input>
+                        </div>
+                        <div class="col-sm-6">
+							Mark : <input type="text" class="form-control form-control-user" th:value=${review.mark} readonly> </input>
+						</div>
+                    </div>
+                    <div class="form-group">
+                    	Contents : <input type="text" class="form-control form-control-user" th:value=${review.contents} readonly> </input>
+                    	<br/><br/>
+                    </div>
+                </div>
+                <!-- --------------------------------------------------------------- -->
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="/js/sb-admin-2.min.js"></script>
+	<script>
+		function getFormData($form){
+		    var unindexed_array = $form.serializeArray();
+		    var indexed_array = {};
+		    
+		    $.map(unindexed_array, function(n, i){
+		        indexed_array[n['name']] = n['value'];
+		    });
+		
+		    return indexed_array;
+		}
+		
+		$.fn.serializeObject = function() {
+		  "use strict"
+		  var result = {}
+		  var extend = function(i, element) {
+		    var node = result[element.name]
+		    if ("undefined" !== typeof node && node !== null) {
+		      if ($.isArray(node)) {
+		        node.push(element.value)
+		      } else {
+		        result[element.name] = [node, element.value]
+		      }
+		    } else {
+		      result[element.name] = element.value
+		    }
+		  }
+
+		  $.each(this.serializeArray(), extend)
+		  return result
+		}
+	
+		$(".btn.btn-primary.btn-user.btn-block").click(function(e) {
+			$("form[name=playgroundForm]").submit();
+		/*
+		var param = $("form[name=playgroundForm]").serializeObject();//getFormData($form);
+		
+		console.log(JSON.stringify(param));
+	    $.ajax({
+		method: "POST",
+		contentType: "application/json",
+		url: "/playground/registerPlayground" ,
+		data : JSON.stringify(param) ,
+		success: function (param) {
+			console.log("SUCCESS");
+			location.href="registerPlayground";
+		} , error: function( e) {
+			console.log("ERROR",e);
+			location.href="404";
+		}
+	})*/
+	});
+    </script>
+</body>
+
+</html>

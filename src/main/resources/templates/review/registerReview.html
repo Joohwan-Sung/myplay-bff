@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>My Playground - Review</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="/css/sb-admin-2.min.css" rel="stylesheet">
+
+</head>
+
+<body class="bg-gradient-primary">
+
+    <div class="container">
+
+        <div class="card o-hidden border-0 shadow-lg my-5">
+            <div class="card-body p-0">
+                <!-- Nested Row within Card Body -->
+                <div class="row">
+                    <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
+                    <div class="col-lg-7">
+                        <div class="p-5">
+                            <div class="text-center">
+                                <h1 class="h4 text-gray-900 mb-4">Register Review</h1>
+                            </div>
+                            <form class="user" name = "reviewForm" th:action="@{/review}" th:object="${form}" method="POST">
+                                <div class="form-group row">
+                                	<div class="col-sm-6 mb-3 mb-sm-0">
+                                        Playground ID <input type="text" class="form-control form-control-user" id="playgroundId" name="playgroundId"
+                                            placeholder="PlaygroundId" th:value="${playgroundInfo.id}" readonly>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        Playground Name <input type="text" class="form-control form-control-user" id="playgroundName" name="playgroundName"
+                                            placeholder="PlaygroundName" th:value="${playgroundInfo.name}" readonly>
+                                    </div>
+                                    
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        Writer ID <input type="text" class="form-control form-control-user" id="writerId" name="writerId"
+                                            th:value="${personalMember.personalMemberId}" placeholder="Writer" >
+                                    </div>
+                                    <div class="col-sm-6">
+                                        Writer Name <input type="text" class="form-control form-control-user" id="writerName" name="writerName"
+                                            th:value="${personalMember.personalMemberName}" placeholder="Writer" >
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    Contents <textarea class="form-control form-control-user" id="contents" name="contents"
+                                        placeholder="Contents">
+                                    </textarea>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        Mark <input type="number" class="form-control form-control-user" name="mark"
+                                            id="mark" placeholder="Mark">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        Date <input type="text" class="form-control form-control-user" id="date" name="createDate"
+                                            placeholder="Date" th:value="${time}" readonly>
+                                    </div>
+                                </div>
+                                <a href="#" class="btn btn-primary btn-user btn-block">
+                                    SAVE
+                                </a>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="/js/sb-admin-2.min.js"></script>
+    
+    	<script>
+		function getFormData($form){
+		    var unindexed_array = $form.serializeArray();
+		    var indexed_array = {};
+		    
+		    $.map(unindexed_array, function(n, i){
+		        indexed_array[n['name']] = n['value'];
+		    });
+		
+		    return indexed_array;
+		}
+		
+		$.fn.serializeObject = function() {
+		  "use strict"
+		  var result = {}
+		  var extend = function(i, element) {
+		    var node = result[element.name]
+		    if ("undefined" !== typeof node && node !== null) {
+		      if ($.isArray(node)) {
+		        node.push(element.value)
+		      } else {
+		        result[element.name] = [node, element.value]
+		      }
+		    } else {
+		      result[element.name] = element.value
+		    }
+		  }
+
+		  $.each(this.serializeArray(), extend)
+		  return result
+		}
+	
+		$(".btn.btn-primary.btn-user.btn-block").click(function(e) {
+			$("form[name=reviewForm]").submit();
+			/* var $form = $("form[name=reservationForm]");
+			var param = $("form[name=reservationForm]").serializeObject();//getFormData($form);
+			
+			console.log(JSON.stringify(param));
+		    $.ajax({
+				method: "POST",
+				contentType: "application/json",
+				url: "/reservation/reserve" ,
+				data : JSON.stringify(param) ,
+				success: function (param) {
+					console.log("SUCCESS");
+					location.href="playgroundReservation";
+				} , error: function( e) {
+					console.log("ERROR",e);
+					location.href="404";
+				}
+			}) */
+		});
+    </script>
+
+</body>
+
+</html>
